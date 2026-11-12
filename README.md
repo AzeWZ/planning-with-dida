@@ -11,6 +11,28 @@
   Not a prompt it might follow. A hook that fires every turn, a plan on disk that survives <code>/clear</code>, and 3 out of 3 blind A/B wins to show it works.
 </p>
 
+## Dida365 variant (this fork)
+
+> 本 fork 把 markdown 任务文件改成滴答清单：任务与状态以滴答为准，`task_plan.md` 只做本地缓存。
+
+This repository is a fork of `OthmanAdi/planning-with-files`. The planning loop is unchanged, but **the task list lives in Dida365 instead of markdown files**:
+
+- **Source of truth:** one Dida parent task `计划：<name>` in the `Project` list, with one `P<n> <phase>` subtask per phase.
+- **Local cache:** `task_plan.md` is refreshed from Dida before each turn, so the hooks and `/clear` recovery keep working.
+- **CodeBuddy distribution:** [`.codebuddy/skills/planning-with-dida/`](.codebuddy/skills/planning-with-dida/). Setup, mapping, and failure modes are in [`references/dida.md`](.codebuddy/skills/planning-with-dida/references/dida.md).
+- **Upstream markdown skill:** still available in [`skills/planning-with-files/`](skills/planning-with-files/) and the other IDE mirrors; it is unchanged.
+
+Only the CodeBuddy distribution is adapted in this fork. The other host mirrors still carry the upstream markdown flow.
+
+Quick start:
+
+```bash
+dida auth status
+dida project list --json          # must contain "Project"
+# after filling Goal / Next Step in task_plan.md:
+python3 .codebuddy/skills/planning-with-dida/scripts/dida-sync.py init --name "<plan>"
+```
+
 ### <a name="sponsor"></a>Sponsors & supporters
 
 <!-- sponsor:evomi:start -->
